@@ -17,7 +17,10 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y sshpass
 
       - name: make dir
-        run: mkdir /home/cims/app
+        run: 
+          echo ${{ secrets.SSH_USERNAME }}
+          pwd
+          mkdir /home/cims/app
 
       - name: Copy files to server
         env:
