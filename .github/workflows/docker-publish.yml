@@ -17,7 +17,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y sshpass
 
       - name: make dir
-        run: mkdir app
+        run: mkdir /home/cims/app
 
       - name: Copy files to server
         env:
