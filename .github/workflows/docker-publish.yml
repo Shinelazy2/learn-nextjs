@@ -16,6 +16,9 @@ jobs:
       - name: Install sshpass
         run: sudo apt-get update && sudo apt-get install -y sshpass
 
+      - name: make dir
+        run: mkdir app
+
       - name: Copy files to server
         env:
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
