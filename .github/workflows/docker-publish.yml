@@ -18,9 +18,7 @@ jobs:
 
       - name: make dir
         run: 
-          echo ${{ secrets.SSH_USERNAME }}
-          pwd
-          mkdir /home/cims/app
+          mkdir -r /home/cims/app
 
       - name: Copy files to server
         env:
