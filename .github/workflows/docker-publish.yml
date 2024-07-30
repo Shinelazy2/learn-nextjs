@@ -20,13 +20,13 @@ jobs:
         env:
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
         run: |
-          sshpass -p 11201 "${{ secrets.SSH_PASSWORD }}" scp -o StrictHostKeyChecking=no -r . ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERNAME }}/app
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" scp -o StrictHostKeyChecking=no -p 11201 -r . ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERNAME }}/app
 
       - name: Build and run Docker container on server
         env:
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
         run: |
-          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << 'EOF'
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no -p 11201 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << 'EOF'
             cd /home/${{ secrets.SSH_USERNAME }}/app
             docker build -t nextjs-app .
             docker run -d -p 3000:3000 --name nextjs-app nextjs-app
