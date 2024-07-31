@@ -1,6 +1,7 @@
 # Install dependencies only when needed
 FROM node:20-alpine AS deps
 WORKDIR /app
+RUN pwd
 COPY package.json pnpm-lock.yaml ./
 RUN npm install -g pnpm && pnpm install --frozen-lockfile
 
@@ -10,6 +11,7 @@ WORKDIR /app
 COPY --from=deps /usr/local/bin/pnpm /usr/local/bin/pnpm
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
+RUN pwd
 RUN pnpm run build
 
 # Production image, copy all the files and run next
