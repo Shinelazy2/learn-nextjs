@@ -2,14 +2,14 @@
 FROM node:20-alpine AS deps
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
-RUN npm install -g pnpm && pnpm install --frozen-lockfile
+RUN npm install -g pnpm && pnpm install --frozen-lockfile  && pnpm run build
 
 # Rebuild the source code only when needed
-FROM node:20-alpine AS builder
-WORKDIR /app
-COPY --from=deps /app /app
-COPY . .
-RUN npm install -g pnpm && pnpm run build
+# FROM node:20-alpine AS builder
+# WORKDIR /app
+# COPY --from=deps /app /app
+# COPY . .
+# RUN npm install -g pnpm
 
 # Production image, copy all the files and run next
 FROM node:20-alpine AS runner
