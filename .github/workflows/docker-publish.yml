@@ -16,6 +16,9 @@ jobs:
       - name: Install sshpass
         run: sudo apt-get update && sudo apt-get install -y sshpass
 
+      - name: ls
+        run: ls -ahl
+
       - name: Copy files to server
         env:
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
