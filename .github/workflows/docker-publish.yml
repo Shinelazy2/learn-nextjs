@@ -50,15 +50,15 @@ jobs:
           sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no -p 11201 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << 'EOF'
             cd /home/${{ secrets.SSH_USERNAME }}/app
             docker build \
-            --build-arg POSTGRES_URL:"${{env.POSTGRES_URL}}"\
-            --build-arg POSTGRES_PRISMA_URL:"${{env.POSTGRES_PRISMA_URL}}"\
-            --build-arg POSTGRES_URL_NO_SSL:"${{env.POSTGRES_URL_NO_SSL}}"\
-            --build-arg POSTGRES_URL_NON_POOLING:"${{env.POSTGRES_URL_NON_POOLING}}"\
-            --build-arg POSTGRES_USER:"${{env.POSTGRES_USER}}"\
-            --build-arg POSTGRES_HOST:"${{env.POSTGRES_HOST}}"\
-            --build-arg POSTGRES_PASSWORD:"${{env.POSTGRES_PASSWORD}}"\
-            --build-arg POSTGRES_DATABASE:"${{env.POSTGRES_DATABASE}}"\
-            --build-arg AUTH_URL:"${{env.AUTH_URL}}"\
+            --build-arg POSTGRES_URL="${{env.POSTGRES_URL}}"\
+            --build-arg POSTGRES_PRISMA_URL="${{env.POSTGRES_PRISMA_URL}}"\
+            --build-arg POSTGRES_URL_NO_SSL="${{env.POSTGRES_URL_NO_SSL}}"\
+            --build-arg POSTGRES_URL_NON_POOLING="${{env.POSTGRES_URL_NON_POOLING}}"\
+            --build-arg POSTGRES_USER="${{env.POSTGRES_USER}}"\
+            --build-arg POSTGRES_HOST="${{env.POSTGRES_HOST}}"\
+            --build-arg POSTGRES_PASSWORD="${{env.POSTGRES_PASSWORD}}"\
+            --build-arg POSTGRES_DATABASE="${{env.POSTGRES_DATABASE}}"\
+            --build-arg AUTH_URL="${{env.AUTH_URL}}"\
             -t nextjs-app .
             docker run -d -p 3000:3000 --name nextjs-app nextjs-app
           EOF
