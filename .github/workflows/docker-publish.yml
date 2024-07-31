@@ -22,6 +22,12 @@ jobs:
       - name: pwd
         run: pwd
 
+      - name: Print SSH information for debugging
+        run: |
+          echo "SSH_USERNAME: ${{ secrets.SSH_USERNAME }}"
+          echo "SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}"
+          echo "SSH_HOST: ${{ secrets.SSH_HOST }}"
+
       - name: Copy files to server
         env:
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
