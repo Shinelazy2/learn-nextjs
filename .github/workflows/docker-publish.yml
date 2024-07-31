@@ -49,6 +49,8 @@ jobs:
         run: |
           sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no -p 11201 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << 'EOF'
             cd /home/${{ secrets.SSH_USERNAME }}/app
+            docker stop nextjs-app
+            docker rmi nextjs-app || true
             docker build \
             --build-arg POSTGRES_URL="${{env.POSTGRES_URL}}"\
             --build-arg POSTGRES_PRISMA_URL="${{env.POSTGRES_PRISMA_URL}}"\
