@@ -9,9 +9,11 @@ RUN npm install -g pnpm && pnpm install --frozen-lockfile
 FROM node:20-alpine AS builder
 
 WORKDIR /app
-COPY . .
 COPY --from=deps /app/node_modules ./node_modules
-RUN pnpm run build
+COPY . .
+
+# Install pnpm and build the project
+RUN npm install -g pnpm && pnpm run build
 
 # Production image, copy all the files and run next
 FROM node:20-alpine AS runner
@@ -40,7 +42,7 @@ ENV AUTH_URL=$AUTH_URL
 
 ENV NODE_ENV=production
 
-# You only need to copy next.config.js if you are NOT using the default configuration
+# Copy build artifacts from builder stage
 COPY --from=builder /app/next.config.mjs ./
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
